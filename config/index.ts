@@ -8,3 +8,5 @@ export let dbUrl: string = process.env.DATABASE_URL ||
       default: throw new Error('DATABASE_URL is required to be specified for this environment')
     }
   })()
+export let reloadSql = process.env.PODQ_RELOAD_SQL || env === 'development'
+export let compressSql = process.env.PODQ_RELOAD_SQL || env === 'production'

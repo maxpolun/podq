@@ -1,13 +1,10 @@
 import {port, dbUrl} from '../config'
 import * as Koa from 'koa'
-import bluebird from 'bluebird'
+import {pgp} from './pg'
 
 if (process.env.OPBEAT_APP_ID) {
   var opbeat = require('opbeat').start()
 }
-let pgp = require('pg-promise')({
-  promiseLib: bluebird
-})
 
 let app = new Koa()
 let db = pgp(dbUrl)
