@@ -1,0 +1,30 @@
+{
+  "name": "podq",
+  "version": "1.0.0",
+  "description": "Podcast Queue app",
+  "main": "index.js",
+  "repository": "maxpolun/podq",
+  "author": "Max Polun <maxpolun@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "test": "tslint -c tslint.json **/*.ts",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "koa": "2",
+    "pg-promise": "^5.5.0",
+    "ts-node": "^2.0.0",
+    "tslib": "^1.4.0",
+    "typescript": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.37",
+    "@types/node": "^6.0.55",
+    "@types/pg-promise": "^0.0.28",
+    "tslint": "^4.2.0",
+    "tslint-config-standard": "^2.0.0",
+    "webpack": "beta",
+    "webpack-dev-server": "beta"
+  }
+}
