@@ -16,6 +16,7 @@
     "@types/pg-promise": "^0.0.28",
     "bluebird": "^3.4.7",
     "koa": "2",
+    "opbeat": "^4.4.0",
     "pg-promise": "^5.5.0",
     "scrypt": "^6.0.3",
     "ts-node": "^2.0.0",
