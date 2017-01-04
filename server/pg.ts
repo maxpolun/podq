@@ -1,18 +1,27 @@
-import * as bluebird from 'bluebird';
+import * as bluebird from 'bluebird'
 import {IMain, IDatabase} from 'pg-promise'
-interface NoExtensions {}
 import {join} from 'path'
-import {reloadSql, compressSql} from '../config'
+import {dbUrl, reloadSql, compressSql, nodeName, dbConnectTimeout} from '../config'
 
 export let pgp: IMain = require('pg-promise')({
-  promiseLib: bluebird
+  promiseLib: bluebird,
+  connect: (client, dc, fresh) => {
+    if (fresh) {
+      client.query(`SET application_name TO '${nodeName}';
+                    SET statement_timeout TO '${dbConnectTimeout}';`)
+    }
+  }
 })
 
+interface NoExtensions {}
 export type Db = IDatabase<NoExtensions>
 
 export function sqlFile (...paths: string[]) {
-  return new pgp.QueryFile(join(paths), {
+  let path = join(...paths)
+  return new pgp.QueryFile(path, {
     debug: reloadSql,
     compress: compressSql
   })
 }
+
+export let db = pgp(dbUrl)
