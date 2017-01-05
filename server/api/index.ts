@@ -13,4 +13,6 @@ registerRoute(apiRouter)
 let authRequiredRouter = new KoaRouter()
 authRequiredRouter.use(jwtRequiredMiddleware)
 
+authRequiredRouter.get('/test', ctx => ctx.body = 'you are authenticated')
+
 apiRouter.use(authRequiredRouter.routes(), authRequiredRouter.allowedMethods())
