@@ -26,12 +26,17 @@ class SendgridEmailSender {
       new Email(email),
       new Content('text/plain', text)
     )
+    console.log('sending', mail.toJSON())
     let req = this.sg.emptyRequest({
       method: 'POST',
       path: '/v3/mail/send',
       body: mail.toJSON()
     })
-    return this.sg.API(req)
+    return this.sg.API(req).then(res => {
+      console.log('email send status: ', res.statusCode)
+      console.log('email send body: ', res.body)
+      console.log('email send headers: ', res.headers)
+    })
   }
 }
 

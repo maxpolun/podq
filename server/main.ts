@@ -23,7 +23,6 @@ declare module 'koa' {
 let app = new Koa()
 let router = new KoaRouter()
 
-
 app.use(koaLogger())
 app.use(koaConvert(koaStatic(join(__dirname, '..', 'web', 'build'), {
   gzip: true,
