@@ -5,6 +5,7 @@ import {dbUrl, reloadSql, compressSql, nodeName, dbConnectTimeout} from '../conf
 
 export let pgp: IMain = require('pg-promise')({
   promiseLib: bluebird,
+  native: false,
   connect: (client, dc, fresh) => {
     if (fresh) {
       client.query(`SET application_name TO '${nodeName}';
@@ -24,4 +25,5 @@ export function sqlFile (...paths: string[]) {
   })
 }
 
+console.log('connecting to ', dbUrl)
 export let db = pgp(dbUrl)
