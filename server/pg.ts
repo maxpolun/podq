@@ -1,17 +1,12 @@
 import * as bluebird from 'bluebird'
 import {IMain, IDatabase} from 'pg-promise'
+import * as pgPromise from 'pg-promise'
 import {join} from 'path'
 import {dbUrl, reloadSql, compressSql, nodeName, dbConnectTimeout} from '../config'
 
-export let pgp: IMain = require('pg-promise')({
+export let pgp: IMain = pgPromise({
   promiseLib: bluebird,
-  native: false,
-  connect: (client, dc, fresh) => {
-    if (fresh) {
-      client.query(`SET application_name TO '${nodeName}';
-                    SET statement_timeout TO '${dbConnectTimeout}';`)
-    }
-  }
+  pgNative: false
 })
 
 interface NoExtensions {}
