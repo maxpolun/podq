@@ -26,7 +26,7 @@ let router = new KoaRouter()
 if (opbeat) {
   app.use(async (ctx, next) => {
     opbeat.setTransactionName(ctx.request.method + ' ' + (ctx as any)._matchedRoute)
-    await next
+    return next()
   })
 }
 
