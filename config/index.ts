@@ -2,7 +2,7 @@ export let env: string = process.env.NODE_ENV || 'development'
 
 function requiredUnless(varname: string, defaults: {[env: string]: any}) {
   if (process.env[varname]) {
-    return process.env.varname
+    return process.env[varname]
   }
   if (typeof defaults[env] !== undefined) {
     return defaults[env]
@@ -11,7 +11,7 @@ function requiredUnless(varname: string, defaults: {[env: string]: any}) {
 }
 
 export let port: number = process.env.PORT || 8000
-export let dbUrl: string = requiredUnless ('DATABASE_URL', {
+export let dbUrl: string = requiredUnless('DATABASE_URL', {
   development: 'postgres://podq@localhost/podq-dev',
   test: 'postgres://podq@localhost/podq-test'
 })
