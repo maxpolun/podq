@@ -43,11 +43,11 @@ app.use(router.routes())
 app.use(router.allowedMethods())
 
 if (opbeat) {
-  router.use(async (ctx, next) => {
+  app.use(async (ctx, next) => {
+    await next()
     let transationName = ctx.request.method + ' ' + (ctx as any)._matchedRoute
     console.log('setting transaction to ', transationName)
     opbeat.setTransactionName(transationName)
-    return next()
   })
 }
 
