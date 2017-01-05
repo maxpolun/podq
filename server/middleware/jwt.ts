@@ -12,5 +12,5 @@ export let jwtRequiredMiddleware: Middleware = async (ctx, next) => {
   }
   let tokenString: string = auth.match(/^Bearer (.*)$/)[1]
   ctx.state.jwt = await verifyToken(tokenString, signingSecret)
-  await next
+  await next()
 }
