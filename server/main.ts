@@ -30,16 +30,14 @@ app.use(koaConvert(koaStatic(join(__dirname, '..', 'web', 'build'), {
   prefix: '/assets'
 })))
 
+import {uuid2short} from './util/shortId'
 router.get('/', async ctx => {
-  ctx.body = (await db.one('SELECT uuid_generate_v4();')).uuid_generate_v4
+  ctx.body = uuid2short((await db.one('SELECT uuid_generate_v4();')).uuid_generate_v4)
 })
 
 import {apiRouter} from './api'
 router.use(apiRouter.routes())
 router.use(apiRouter.allowedMethods())
-
-// import loginRoute from './api/login'
-// loginRoute(router)
 
 app.use(router.routes())
 app.use(router.allowedMethods())

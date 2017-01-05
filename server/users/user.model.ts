@@ -113,11 +113,9 @@ export class RegisterUserForm {
   }
 }
 
+import {uuid2short, short2uuid} from '../util/shortId'
 let saveRegisterToken = sqlFile(__dirname, 'saveRegisterToken.sql')
 let findRegisterToken = sqlFile(__dirname, 'findRegisterToken.sql')
-
-import * as short from 'short-uuid'
-let translator = short()
 
 export class RegisterTokenRecord {
   constructor (private uuid: string|undefined,
@@ -126,7 +124,7 @@ export class RegisterTokenRecord {
                private createdAt: Date|undefined = undefined) {}
 
   static async findByShortId(shortId: string, db): Promise<RegisterTokenRecord> {
-    let uuid: string = translator.toUUID(shortId)
+    let uuid: string = short2uuid(shortId)
     let result = await db.one(findRegisterToken, {uuid})
     return new RegisterTokenRecord(result.uuid, result.email, result.pw_hash, result.created_at)
   }
@@ -137,8 +135,11 @@ export class RegisterTokenRecord {
     this.createdAt = result.created_at
   }
 
-  shortId () {
-    return translator.fromUUID(this.uuid)
+  shortId (): string {
+    if (!this.uuid) {
+      throw new Error('tried to get the shortId of an unsaved register token')
+    }
+    return uuid2short(this.uuid)
   }
 
   toUser (): UserRecord {
