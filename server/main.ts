@@ -23,6 +23,13 @@ declare module 'koa' {
 let app = new Koa()
 let router = new KoaRouter()
 
+if (opbeat) {
+  app.use(async (ctx, next) => {
+    await next
+    opbeat.setTransactionName(ctx.request.method + ' ' + (ctx as any)._matchedRoute)
+  })
+}
+
 app.use(koaLogger())
 app.use(koaConvert(koaStatic(join(__dirname, '..', 'web', 'build'), {
   gzip: true,
@@ -41,13 +48,6 @@ router.use(apiRouter.allowedMethods())
 
 app.use(router.routes())
 app.use(router.allowedMethods())
-
-if (opbeat) {
-  app.use(async (ctx, next) => {
-    opbeat.setTransactionName(ctx.request.method + ' ' + (ctx as any)._matchedRoute)
-    await next
-  })
-}
 
 app.listen(port, () => {
   console.log(`server started on port ${port}`)
