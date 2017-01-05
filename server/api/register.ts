@@ -23,7 +23,9 @@ export default (router: KoaRouter) => {
     let record = await form.toRecord()
     await record.save(db)
     let url = resolve(baseUrl, `/api/register?token=${record.shortId()}`)
-    await send(email, `You have attempted to register for podqueue. Go to ${url} to confirm your email address`)
+    await send(email,
+               'Confirm Email to register for podqueue',
+               `You have attempted to register for podqueue. Go to ${url} to confirm your email address`)
 
     ctx.status = 201
     ctx.body = {

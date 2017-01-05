@@ -126,9 +126,7 @@ export class RegisterTokenRecord {
                private createdAt: Date|undefined = undefined) {}
 
   static async findByShortId(shortId: string, db): Promise<RegisterTokenRecord> {
-    console.log('converting to uuid', shortId)
     let uuid: string = translator.toUUID(shortId)
-    console.log('got uuid:', uuid)
     let result = await db.one(findRegisterToken, {uuid})
     return new RegisterTokenRecord(result.uuid, result.email, result.pw_hash, result.created_at)
   }

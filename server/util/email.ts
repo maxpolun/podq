@@ -1,16 +1,44 @@
-import {env} from '../../config'
+import {sendgridApiKey} from '../../config'
+import * as SendGrid from 'sendgrid'
+let {Email, Content, Mail} = SendGrid.mail
 
-class FakeEmailServer {
-
-  async send (email: string, text: string): Promise<{}> {
-    console.log(`send email to ${email} with text\n${text}`)
-    return Promise.resolve({})
-  }
-
+interface EmailSender {
+  send(email: string, subject: string, text: string): Promise<any>
 }
 
-let server = new FakeEmailServer()
+class FakeEmailSender {
+  async send (email: string, subject: string, text: string): Promise<any> {
+    console.log(`send email to ${email} with text\nsubject: ${subject}\n${text}`)
+    return {}
+  }
+}
 
-export function send (email: string, text: string): Promise<{}> {
-  return server.send(email, text)
+class SendgridEmailSender {
+  private sg
+  constructor (private key: string, private fromEmail: string) {
+    this.sg = SendGrid(key)
+  }
+
+  send(email: string, subject: string, text: string): Promise<any> {
+    let mail = new Mail(
+      new Email(this.fromEmail),
+      subject,
+      new Email(email),
+      new Content('text/plain', text)
+    )
+    let req = this.sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON()
+    })
+    return this.sg.API(req)
+  }
+}
+
+let server: EmailSender = sendgridApiKey ?
+                            new SendgridEmailSender(sendgridApiKey, 'noreply@podqueue.com') :
+                            new FakeEmailSender()
+
+export function send (email: string, subject: string, text: string): Promise<{}> {
+  return server.send(email, subject, text)
 }

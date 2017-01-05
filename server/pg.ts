@@ -20,5 +20,4 @@ export function sqlFile (...paths: string[]) {
   })
 }
 
-console.log('connecting to ', dbUrl)
 export let db = pgp(dbUrl)
