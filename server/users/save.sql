@@ -1,3 +1,5 @@
 -- Save user
 
-INSERT INTO users (email, pw_hash) VALUES (${email}, ${pwHash})
+INSERT INTO users (email, pw_hash)
+       VALUES (${email}, ${pwHash})
+       RETURNING uuid;

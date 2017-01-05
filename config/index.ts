@@ -11,6 +11,7 @@ function requiredUnless(varname: string, defaults: {[env: string]: any}) {
 }
 
 export let port: number = process.env.PORT || 8000
+export let baseUrl: string = process.env.BASEURL || `http://localhost:${port}/`
 export let dbUrl: string = requiredUnless('DATABASE_URL', {
   development: 'postgres://podq@localhost/podq-dev',
   test: 'postgres://podq@localhost/podq-test'

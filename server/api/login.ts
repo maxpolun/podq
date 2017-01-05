@@ -2,12 +2,11 @@ import * as KoaRouter from 'koa-router'
 import * as body from 'koa-body'
 import {db} from '../pg'
 
-import {LoginForm, UserRecord, LoginFormError} from '../users/user.model'
-class LoginFormInvalidError extends Error {}
+import {LoginForm, UserRecord, FormError} from '../users/user.model'
 
 export default (router: KoaRouter) => {
   router.post('login', '/login', body(), async ctx => {
-    let errors: LoginFormError[] = []
+    let errors: FormError[] = []
     try {
       let {email, password} = ctx.request.body
       let user = await UserRecord.findByEmail(email, db)
@@ -17,7 +16,9 @@ export default (router: KoaRouter) => {
         errors = errors.concat(errors)
         throw new Error('login form invalid')
       }
-      this.body = {token: await user.generateJwt()}
+      let token = await user.generateJwt()
+
+      ctx.body = {token}
     } catch (e) {
       if (e.errId) {
         errors.push(e)
