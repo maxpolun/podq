@@ -15,7 +15,8 @@
     "migrate": "chum migrate up",
     "new-migration": "chum new",
     "build": "webpack --config config/webpack.config.js",
-    "webpack-dev-server": "webpack-dev-server -c config/webpack.config.js"
+    "webpack-dev-server": "webpack-dev-server -c config/webpack.config.js",
+    "postinstall": "yarn run build"
   },
   "dependencies": {
     "@angular/common": "4.0.0-beta.2",
