@@ -3,6 +3,8 @@
     "target": "es2015",
     "noImplicitAny": false,
     "strictNullChecks": true,
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "importHelpers": true,

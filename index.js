@@ -1,6 +1,6 @@
 let path = require('path')
 require('ts-node').register({
-  project: path.resolve('tsconfig.server.json')
+  project: path.resolve('./server/tsconfig.json')
 })
 
 require('./server/main')

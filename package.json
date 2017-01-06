@@ -14,7 +14,7 @@
     "start": "node index.js",
     "migrate": "chum migrate up",
     "new-migration": "chum new",
-    "build": "webpack -c config/webpack.config.js",
+    "build": "webpack --config config/webpack.config.js",
     "webpack-dev-server": "webpack-dev-server -c config/webpack.config.js"
   },
   "dependencies": {
@@ -52,11 +52,13 @@
     "sendgrid": "^4.7.1",
     "short-uuid": "^2.2.0",
     "style-loader": "^0.13.1",
+    "ts-loader": "^1.3.3",
     "ts-node": "^2.0.0",
     "tslib": "^1.4.0",
     "typescript": "^2.1.4",
     "typescript-loader": "^1.1.3",
     "webpack": "^2.2.0-rc.3",
+    "webpack-fail-plugin": "^1.0.5",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
