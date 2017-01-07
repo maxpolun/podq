@@ -15,7 +15,7 @@
     "migrate": "chum migrate up",
     "new-migration": "chum new",
     "build": "webpack --config config/webpack.prod.config.js",
-    "webpack-dev-server": "webpack-dev-server --inline --hot --config config/webpack.dev.config.js",
+    "webpack-dev-server": "webpack-dev-server --inline --hot --port 8001 --config config/webpack.dev.config.js",
     "postinstall": "yarn run build"
   },
   "dependencies": {
@@ -47,6 +47,7 @@
     "koa-router": "maxpolun/koa-router#dbaabd1",
     "koa-static-cache": "^3.1.7",
     "node-sass": "^4.1.1",
+    "normalize.css": "^5.0.0",
     "opbeat": "^4.4.0",
     "pg-promise": "^5.5.0",
     "rxjs": "^5.0.1",
