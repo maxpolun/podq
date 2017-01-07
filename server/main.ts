@@ -46,10 +46,7 @@ import {apiRouter} from './api'
 router.use(apiRouter.routes())
 router.use(apiRouter.allowedMethods())
 
-let stats = require('../web/build/stats.json')
-function asset(name: string): string {
-  return stats.assetsByChunkName[name]
-}
+import {jsTag, cssTag} from './util/assets'
 
 import {uuid2short} from './util/shortId'
 router.get('/', async ctx => {
@@ -58,13 +55,13 @@ router.get('/', async ctx => {
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="/assets/${asset('main')[1]}">
+  ${cssTag('main')}
   <title>Podqueue</title>
 </head>
 <body>
-  <script src="/assets/${asset('vendor')}"></script>
-  <script src="/assets/${asset('polyfills')}"></script>
-  <script src="/assets/${asset('main')[0]}"></script>
+  ${jsTag('vendor')}
+  ${jsTag('polyfills')}
+  ${jsTag('main')}
 </body>
 </html>
   `

@@ -26,3 +26,6 @@ export let signingSecret = requiredUnless('SIGNING_SECRET', {
 export let nodeName = process.env.DYNO || 'local-node'
 export let dbConnectTimeout = process.env.PODQ_DB_TIMEOUT || '30s'
 export let sendgridApiKey = process.env.SENDGRID_API_KEY
+
+export let assetsPath = process.env.ASSETS_PATH || (env === 'production' ? '/assets/' : 'http://localhost:8001/assets/')
+export let useWebpackDevServer = /localhost/.test(assetsPath)
