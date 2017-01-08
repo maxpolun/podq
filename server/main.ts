@@ -59,8 +59,9 @@ router.get('/', async ctx => {
   <title>Podqueue</title>
 </head>
 <body>
-  ${jsTag('vendor')}
+  <podq-app>Loading AppComponent content here ...</podq-app>
   ${jsTag('polyfills')}
+  ${jsTag('vendor')}
   ${jsTag('main')}
 </body>
 </html>

@@ -9,5 +9,6 @@ config.module.rules.push({
   loader: ['style-loader', 'css-loader', 'sass-loader']
 })
 config.plugins.push(new webpack.NamedModulesPlugin())
+config.devtool = 'inline-module-sourcemap'
 
 module.exports = config

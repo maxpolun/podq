@@ -27,5 +27,6 @@ config.plugins.push(function () {
   });
 })
 config.plugins.push(new webpack.optimize.UglifyJsPlugin())
+config.devtool = 'sourcemap'
 
 module.exports = config

@@ -28,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor']
+        names: ['polyfills']
     }),
     new webpack.EnvironmentPlugin([
       'NODE_ENV'

@@ -4,6 +4,7 @@
     "noImplicitAny": false,
     "strictNullChecks": true,
     "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -11,9 +12,15 @@
     "sourceMap": true,
     "lib": ["es2015"],
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "pretty": true,
     "types": [
         "node"
     ]
+  },
+  "angularCompilerOptions": {
+   "genDir": ".",
+   "skipMetadataEmit" : true,
+   "debug": true
   }
 }
