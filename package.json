@@ -16,7 +16,7 @@
     "new-migration": "chum new",
     "build": "webpack --config config/webpack.prod.config.js",
     "webpack-dev-server": "webpack-dev-server --inline --hot --port 8001 --config config/webpack.dev.config.js",
-    "postinstall": "if [ \"$NODE_ENV\" == \"production\" ]; then yarn run build; fi"
+    "postinstall": "if [ \"$NODE_ENV\" = \"production\" ]; then yarn run build; fi"
   },
   "dependencies": {
     "@angular/common": "2.4.1",
