@@ -3,6 +3,7 @@ let webpack = require('webpack')
 
 let ExtractTextPlugin = require('extract-text-webpack-plugin')
 let CompressionPlugin = require('compression-webpack-plugin')
+const BabiliPlugin = require("babili-webpack-plugin");
 let fs = require('fs')
 
 let extractCss = new ExtractTextPlugin('[name]-[contenthash].bundle.css')
@@ -26,7 +27,7 @@ config.plugins.push(function () {
       JSON.stringify(stats.toJson()));
   });
 })
-config.plugins.push(new webpack.optimize.UglifyJsPlugin())
+config.plugins.push(new BabiliPlugin())
 config.devtool = 'sourcemap'
 
 module.exports = config
