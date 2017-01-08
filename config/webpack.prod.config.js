@@ -27,7 +27,7 @@ config.plugins.push(function () {
       JSON.stringify(stats.toJson()));
   });
 })
-config.plugins.push(new BabiliPlugin())
+// config.plugins.push(new BabiliPlugin())
 config.devtool = 'sourcemap'
 
 module.exports = config
