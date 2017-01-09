@@ -7,20 +7,12 @@ const LSKey = 'podqLoginToken'
 export class LoginService {
   constructor (private http: Http) {}
 
-  isLoggedIn (): Boolean {
-    return !!window.localStorage.getItem(LSKey)
-  }
-
-  async register (email: string, password: string, passwordConfirmation: string): Promise<Boolean> {
-    try {
-      let response = await this.http.post('/api/register', {
-        email, password, passwordConfirmation
-      }).toPromise()
-    } catch (e) {
-      let jsonErr = e.json()
-      throw jsonErr
-    }
-    return true
+  register (email: string, password: string, passwordConfirmation: string): Promise<boolean> {
+    return this.http.post('/api/register', {
+      email, password, passwordConfirmation
+    }).toPromise()
+      .then(() => true)
+      .catch(e => Promise.reject(e.json()))
   }
 
   login (email: string, password: string): Promise<string> {
@@ -28,7 +20,19 @@ export class LoginService {
       email, password
     }).toPromise()
     .then(response => response.json().token)
+    .then(token => {
+      this.setToken(token)
+      return token
+    })
     .catch(error => error.json())
+  }
+
+  isLoggedIn (): boolean {
+    return !!this.getToken()
+  }
+
+  getToken(): string|null {
+    return window.localStorage.getItem(LSKey)
   }
 
   private setToken(token: string) {
