@@ -12,25 +12,23 @@ export class LoginService {
   }
 
   async register (email: string, password: string, passwordConfirmation: string): Promise<Boolean> {
-    let response = await this.http.post('/api/register', {
-      email, password, passwordConfirmation
-    }).toPromise()
-    if (!response.ok) {
-      throw response.json()
+    try {
+      let response = await this.http.post('/api/register', {
+        email, password, passwordConfirmation
+      }).toPromise()
+    } catch (e) {
+      let jsonErr = e.json()
+      throw jsonErr
     }
     return true
   }
 
-  async login (email: string, password: string): Promise<string> {
-    let response = await this.http.post('/api/login', {
+  login (email: string, password: string): Promise<string> {
+    return this.http.post('/api/login', {
       email, password
     }).toPromise()
-    if (!response.ok) {
-      throw response.json()
-    }
-    let token = response.json().token
-    this.setToken(token)
-    return token
+    .then(response => response.json().token)
+    .catch(error => error.json())
   }
 
   private setToken(token: string) {

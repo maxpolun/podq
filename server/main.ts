@@ -49,12 +49,15 @@ router.use(apiRouter.allowedMethods())
 import {jsTag, cssTag} from './util/assets'
 
 import {uuid2short} from './util/shortId'
-router.get('/', async ctx => {
+
+async function renderApp (ctx) {
   ctx.type = 'text/html'
   ctx.body = `
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width">
+  <base href="/">
   ${cssTag('main')}
   <title>Podqueue</title>
 </head>
@@ -66,7 +69,11 @@ router.get('/', async ctx => {
 </body>
 </html>
   `
-})
+}
+
+router.get('/', renderApp)
+router.get('/login', renderApp)
+router.get('/register', renderApp)
 
 app.use(router.routes())
 app.use(router.allowedMethods())
