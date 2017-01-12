@@ -13,6 +13,8 @@ registerRoute(apiRouter)
 let authRequiredRouter = new KoaRouter()
 authRequiredRouter.use(jwtRequiredMiddleware)
 
-authRequiredRouter.get('/test', ctx => ctx.body = 'you are authenticated')
-
+import subscriptionsRoutes from './subscriptions'
+subscriptionsRoutes(authRequiredRouter)
+import podcastsRoute from './podcasts'
+podcastsRoute(authRequiredRouter)
 apiRouter.use(authRequiredRouter.routes(), authRequiredRouter.allowedMethods())

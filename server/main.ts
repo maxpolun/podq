@@ -48,8 +48,6 @@ router.use(apiRouter.allowedMethods())
 
 import {jsTag, cssTag} from './util/assets'
 
-import {uuid2short} from './util/shortId'
-
 async function renderApp (ctx) {
   ctx.type = 'text/html'
   ctx.body = `

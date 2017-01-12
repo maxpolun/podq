@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Program",
+      "name": "Launch Server",
       "type": "node2",
       "request": "launch",
       "program": "${workspaceRoot}/index.js",
@@ -14,12 +14,28 @@
       "sourceMaps": true
     },
     {
-      "name": "Attach to Process",
+      "name": "Attach to Server",
       "type": "node2",
       "request": "attach",
       "port": 9229,
       "outFiles": [],
       "sourceMaps": true
+    },
+    {
+      "name": "Launch Chrome against localhost, with sourcemaps",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8000",
+      "sourceMaps": true,
+      "webRoot": "${workspaceRoot}/web"
+    },
+    {
+      "name": "Attach to Chrome, with sourcemaps",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "sourceMaps": true,
+      "webRoot": "${workspaceRoot}/web"
     }
   ]
 }

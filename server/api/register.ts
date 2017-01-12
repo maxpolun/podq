@@ -37,6 +37,7 @@ export default (router: KoaRouter) => {
     let record = await RegisterTokenRecord.findByShortId(ctx.query.token, db)
     let user = record.toUser()
     await user.save(db)
+    await record.delete(db)
 
     ctx.status = 200
     ctx.body = {

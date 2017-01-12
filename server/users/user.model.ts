@@ -1,10 +1,17 @@
 import {pgp, Db, sqlFile} from '../pg'
 import {compare, hash} from 'bcrypt'
 import {sign} from 'jsonwebtoken'
+
 import {signingSecret} from '../../config'
+import {uuid2short, short2uuid} from '../util/shortId'
+
+import {SubscriptionsRecord} from '../podcasts/subscription.model'
 
 let saveUser = sqlFile(__dirname, 'save.sql')
 let findUserByEmail = sqlFile(__dirname, 'find.sql')
+let findUserByUuid = sqlFile(__dirname, 'findUuid.sql')
+
+export class NoUserError extends Error {}
 
 export class UserRecord {
   constructor (public email: string,
@@ -20,6 +27,18 @@ export class UserRecord {
       }
     }
     return new UserRecord(record.email, record.pw_hash, record.uuid)
+  }
+
+  static async findByShortId (shortid: string, db: Db): Promise<UserRecord> {
+    let uuid = short2uuid(shortid)
+    let result = await db.oneOrNone(findUserByUuid, {uuid})
+
+    if (!result) {
+      console.error('user not found', result)
+      throw new NoUserError()
+    }
+
+    return new UserRecord(result.email, result.pw_hash, result.uuid)
   }
 
   async save (db: Db) {
@@ -48,6 +67,13 @@ export class UserRecord {
         }
       )
     })
+  }
+
+  subscriptions (db: Db): Promise<SubscriptionsRecord[]> {
+    if (!this.uuid) {
+      throw new Error('User record has not been saved when loading subscriptions')
+    }
+    return SubscriptionsRecord.findAllByUserUuid(this.uuid, db)
   }
 }
 
@@ -113,9 +139,9 @@ export class RegisterUserForm {
   }
 }
 
-import {uuid2short, short2uuid} from '../util/shortId'
 let saveRegisterToken = sqlFile(__dirname, 'saveRegisterToken.sql')
 let findRegisterToken = sqlFile(__dirname, 'findRegisterToken.sql')
+let deleteRegisterToken = sqlFile(__dirname, 'deleteRegisterToken.sql')
 
 export class RegisterTokenRecord {
   constructor (private uuid: string|undefined,
@@ -133,6 +159,10 @@ export class RegisterTokenRecord {
     let result = await db.one(saveRegisterToken, this)
     this.uuid = result.uuid
     this.createdAt = result.created_at
+  }
+
+  delete(db: Db): Promise<void> {
+    return db.none(deleteRegisterToken, this)
   }
 
   shortId (): string {

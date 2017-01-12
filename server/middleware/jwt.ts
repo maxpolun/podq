@@ -6,11 +6,12 @@ import {promisify} from 'bluebird'
 let verifyToken = promisify(verify)
 
 export let jwtRequiredMiddleware: Middleware = async (ctx, next) => {
-  let auth = ctx.headers.authorization
-  if (!auth) {
+  try {
+    let auth = ctx.headers.authorization
+    let tokenString: string = auth.match(/^Bearer (.*)$/i)[1]
+    ctx.state.jwt = await verifyToken(tokenString, signingSecret)
+    await next()
+  } catch (e) {
     ctx.throw(403)
   }
-  let tokenString: string = auth.match(/^Bearer (.*)$/)[1]
-  ctx.state.jwt = await verifyToken(tokenString, signingSecret)
-  await next()
 }

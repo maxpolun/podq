@@ -4,10 +4,13 @@ import * as pgPromise from 'pg-promise'
 import {join} from 'path'
 import {dbUrl, reloadSql, compressSql, nodeName, dbConnectTimeout} from '../config'
 
-export let pgp: IMain = pgPromise({
+let options = {
   promiseLib: bluebird,
   pgNative: false
-})
+}
+
+export let pgp: IMain = pgPromise(options)
+require('pg-monitor').attach(options)
 
 interface NoExtensions {}
 export type Db = IDatabase<NoExtensions>
