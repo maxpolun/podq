@@ -72,6 +72,9 @@ async function renderApp (ctx) {
 router.get('/', renderApp)
 router.get('/login', renderApp)
 router.get('/register', renderApp)
+router.get(/\/queue\/?.*/, renderApp)
+router.get(/\/podcasts\/.*/, renderApp)
+router.get(/\/subscriptions\/.*/, renderApp)
 
 app.use(router.routes())
 app.use(router.allowedMethods())

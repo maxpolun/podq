@@ -1,4 +1,6 @@
 import { Component } from '@angular/core'
+import {Router} from '@angular/router'
+
 import {LoginForm} from './login.form.model'
 import {LoginService} from './login.service'
 
@@ -42,12 +44,13 @@ import {LoginService} from './login.service'
 })
 export class LoginComponent {
   public form = new LoginForm('', '')
-  constructor (private loginService: LoginService) {}
+  constructor (private loginService: LoginService, private router: Router) {}
 
   public async trySubmit(event) {
     event.preventDefault()
     try {
       let result = await this.loginService.login(this.form.email, this.form.password)
+      this.router.navigate(['queue'])
       console.log(result)
     } catch (e) {
       console.error(e.json())

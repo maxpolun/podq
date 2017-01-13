@@ -4,28 +4,31 @@ import { RouterModule, Route } from '@angular/router'
 
 import { AppComponent } from './app.component'
 import {LoginModule} from '../login/login.module'
-import {LoginComponent} from '../login/login.component'
-import {RegisterComponent} from '../login/register.component'
+import {QueueModule} from '../queue/queue.module'
+import {SubscriptionsModule} from '../subscriptions/subscriptions.module'
+import {PodcastsModule} from '../podcasts/podcasts.module'
+import {LoginRequiredGuard} from './login-required.guard'
 
 let routes: Route[] = [
   {
-    path: 'login',
-    component: LoginComponent
-  },
-  {
-    path: 'register',
-    component: RegisterComponent
-  },
-  {
     path: '',
-    redirectTo: '/login',
+    canActivate: [LoginRequiredGuard],
+    redirectTo: '/queue',
     pathMatch: 'full'
   }
 ]
 
 @NgModule({
-  imports: [ BrowserModule, LoginModule, RouterModule.forRoot(routes) ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    LoginModule,
+    PodcastsModule,
+    QueueModule,
+    SubscriptionsModule
+  ],
   declarations: [ AppComponent ],
+  providers: [LoginRequiredGuard],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}

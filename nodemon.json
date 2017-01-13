@@ -1,3 +1,4 @@
 {
-  "ext": "js,ts"
+  "ext": "js,ts",
+  "ignore": ["web", "mobile"]
 }
