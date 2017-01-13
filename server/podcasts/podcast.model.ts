@@ -1,6 +1,7 @@
 import * as FeedParser from 'feedparser'
 import {uniq} from 'lodash'
 import {Db, sqlFile} from '../pg'
+import {podcastRoute, episodesRoute} from '../../config/routes'
 
 export class Podcast {
   constructor (public name: string,
@@ -20,6 +21,7 @@ export class Podcast {
 }
 
 let saveIfNewPodcast = sqlFile(__dirname, 'saveIfNewPodcast.sql')
+let searchForPodcasts = sqlFile(__dirname, 'searchForPodcasts.sql')
 
 export class PodcastRecord {
   constructor (public uuid: string, public podcast: Podcast) {}
@@ -28,9 +30,25 @@ export class PodcastRecord {
     return db.one(saveIfNewPodcast, podcast).then(result => new PodcastRecord(result.uuid, podcast))
   }
 
+  static search(searchParams: {}, db: Db): Promise<PodcastRecord[]> {
+    return db.many(searchForPodcasts, searchParams)
+             .then(podcasts => podcasts.map(PodcastRecord.fromRow))
+  }
+
+  static fromRow(row): PodcastRecord {
+    return new PodcastRecord(row.uuid, new Podcast(
+      row.name,
+      row.description,
+      row.feed_url,
+      row.hub_url
+    ))
+  }
+
   toJSON () {
     return {
       uuid: this.uuid,
+      selfUrl: podcastRoute(this.uuid),
+      episodesUrl: episodesRoute(this.uuid),
       ... this.podcast
     }
   }
@@ -62,6 +80,7 @@ export class Episode {
 }
 
 let saveIfNewEpisode = sqlFile(__dirname, 'saveIfNewEpisode.sql')
+let findEpisodesByPodcastUuid = sqlFile(__dirname, 'findEpisodesByPodcastUuid.sql')
 
 export class EpisodeRecord {
   constructor (public uuid: string, public podcastUuid: string, public episode: Episode) {}
@@ -70,7 +89,6 @@ export class EpisodeRecord {
     let records: EpisodeRecord[] = []
     return db.tx(t => {
       return t.sequence(i => {
-        console.log('inserting ep', i, 'of', episodes.length)
         if (i >= episodes.length) { return }
         let saveRecord = {podcastUuid: podcast.uuid, ...episodes[i]}
         return t.one(saveIfNewEpisode, saveRecord)
@@ -82,7 +100,29 @@ export class EpisodeRecord {
     }).then(() => records)
   }
 
-    toJSON () {
+  static findAllByPodcast(podcastUuid: string, db: Db): Promise<EpisodeRecord[]> {
+    return db.many(findEpisodesByPodcastUuid, {podcastUuid})
+             .then(episodes => episodes.map(EpisodeRecord.fromRow))
+  }
+
+  static fromRow(row): EpisodeRecord {
+    return new EpisodeRecord(
+      row.uuid,
+      row.podcast_uuid,
+      new Episode(
+        row.name,
+        row.description,
+        row.released_at,
+        row.author_guid,
+        row.file_url,
+        row.file_format,
+        row.file_length,
+        row.file_duration
+      )
+    )
+  }
+
+  toJSON () {
     return {
       uuid: this.uuid,
       podcastUuid: this.podcastUuid,

@@ -2,7 +2,7 @@ import * as bluebird from 'bluebird'
 import {IMain, IDatabase} from 'pg-promise'
 import * as pgPromise from 'pg-promise'
 import {join} from 'path'
-import {dbUrl, reloadSql, compressSql, nodeName, dbConnectTimeout} from '../config'
+import {dbUrl, reloadSql, compressSql, nodeName, dbConnectTimeout, logSql} from '../config'
 
 let options = {
   promiseLib: bluebird,
@@ -10,7 +10,9 @@ let options = {
 }
 
 export let pgp: IMain = pgPromise(options)
-require('pg-monitor').attach(options)
+if (logSql) {
+  require('pg-monitor').attach(options)
+}
 
 interface NoExtensions {}
 export type Db = IDatabase<NoExtensions>

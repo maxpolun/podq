@@ -22,6 +22,7 @@ export let signingSecret = requiredUnless('SIGNING_SECRET', {
   development: 'dev-secret',
   test: 'test-secret'
 })
+export let logSql = process.env.PODQ_LOG_SQL || env === 'development'
 
 export let nodeName = process.env.DYNO || 'local-node'
 export let dbConnectTimeout = process.env.PODQ_DB_TIMEOUT || '30s'
