@@ -1,5 +1,8 @@
 @import '~normalize.css';
 
+$desktop-break: 992px;
+$tablet-break: 768px;
+
 html {
   box-sizing: border-box;
 }
@@ -20,7 +23,6 @@ html {
 
 .btn {
   padding: 10px;
-
   border: 1px solid #666;
   border-radius: 3px;
 
@@ -34,5 +36,129 @@ html {
 
 .form-actions {
   padding: 10px;
+}
+
+header {
+  background-color: #2a87e4;
+  padding: 15px;
+  h1 {
+    margin: 0;
+    display: inline;
+  }
+}
+
+.app-nav {
+  position: absolute;
+  left: 0;
+  top: 65px;
+  transform: translateX(0);
+  transition: transform 200ms ease;
+  @media (min-width: $desktop-break) {
+    position: static;
+  }
+  .nav-hidden & {
+    transform: translateX(-80vw);
+    transition: transform 200ms ease;
+  }
+  height: calc(100vh - 65px);
+  width: 80vw;
+  background-color: #333;
+}
+
+.app-navigation-links {
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app-nav-link {
+  width: 100%;
+  display: block;
+  > a {
+    color: #ccc;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    &.active {
+      background-color: #666;
+    }
+  }
+}
+
+@mixin hamburger-line () {
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  left: 0;
+  border-radius: 4px;
+  background-color: #000;
+}
+
+.btn-hamburger {
+  min-width: 40px;
+  height: 2em;
+  position: relative;
+  margin-right: 10px;
+  @media (min-width: $desktop-break) {
+    display: none;
+  }
+}
+
+.hamburger-icon {
+  @include hamburger-line();
+  &::before {
+    @include hamburger-line();
+    top: -10px;
+    display: block;
+    content: '';
+  }
+  &::after {
+    @include hamburger-line();
+    bottom: -10px;
+    display: block;
+    content: '';
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+.card-deck {
+  list-style-type: none;
+  padding: 1em;
+}
+
+.card {
+  border: 1px solid #666;
+  border-radius: 3px;
+  margin-bottom: 1em;
+}
+
+.card-body {
+  padding: 0 1em;
+}
+
+.card-header {
+  border-bottom: 1px solid #666;
+  padding: 0 1em;
+  > small {
+    color: #666;
+  }
+}
+
+.card-title {
+  margin: 0;
+  padding: 0.5em 0;
+  font-size: 110%;
 }
 

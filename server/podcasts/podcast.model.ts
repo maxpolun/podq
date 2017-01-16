@@ -30,8 +30,8 @@ export class PodcastRecord {
     return db.one(saveIfNewPodcast, podcast).then(result => new PodcastRecord(result.uuid, podcast))
   }
 
-  static search(searchParams: {}, db: Db): Promise<PodcastRecord[]> {
-    return db.many(searchForPodcasts, searchParams)
+  static search(userUuid: string, searchParams: {}, db: Db): Promise<PodcastRecord[]> {
+    return db.many(searchForPodcasts, {userUuid})
              .then(podcasts => podcasts.map(PodcastRecord.fromRow))
   }
 

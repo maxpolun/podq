@@ -31,7 +31,8 @@ module.exports = {
         names: ['polyfills']
     }),
     new webpack.EnvironmentPlugin([
-      'NODE_ENV'
+      'NODE_ENV',
+      'PODQ_ANGULAR_PROD_MODE'
     ])
   ]
 }

@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms'
 
 import {PodcastsRoutingModule} from './podcasts-routing.module'
 import {PodcastsListComponent} from './podcasts-list.component'
+import {PodcastsService} from './podcasts.service'
 
 @NgModule({
   imports: [ BrowserModule, FormsModule, PodcastsRoutingModule],
   exports: [],
   declarations: [PodcastsListComponent],
-  providers: []
+  providers: [PodcastsService]
 })
 export class PodcastsModule {}

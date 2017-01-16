@@ -12,7 +12,8 @@ function readFile (path: string): NodeJS.ReadableStream {
 
 export default (router: KoaRouter) => {
   router.get('search-podcasts', '/podcasts', async ctx => {
-    ctx.body = await PodcastRecord.search({}, db)
+    console.log('uuid', ctx.state.jwt.uuid)
+    ctx.body = await PodcastRecord.search(ctx.state.jwt.uuid, {}, db)
   })
 
   router.get('podcast-episodes', '/podcasts/:podcastid/episodes', async ctx => {
