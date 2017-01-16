@@ -10,6 +10,7 @@ import { Component } from '@angular/core'
     </button>
     <h1>Podq</h1>
     <podq-app-navigation [class.nav-hidden]="menuHidden" (onNavigate)="hideMenu()"></podq-app-navigation>
+    <podq-notification-list></podq-notification-list>
   </header>
   `
 })

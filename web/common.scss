@@ -162,3 +162,34 @@ header {
   font-size: 110%;
 }
 
+podq-notification-list {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  width: 20em;
+}
+
+.notification {
+  width: 100%;
+  border-radius: 3px;
+  background-color: #1f7;
+  color: #333;
+  position: relative;
+  margin-top: 5px;
+
+  &-title {
+    font-weight: bold;
+    font-size: 110%;
+    padding: 3px;
+  }
+
+  &-body {
+    padding: 3px;
+  }
+
+  &-clear-btn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+  }
+}

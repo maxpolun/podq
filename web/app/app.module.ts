@@ -5,6 +5,8 @@ import { RouterModule, Route } from '@angular/router'
 import {AppComponent} from './app.component'
 import {NavigationComponent, NavLinkComponent} from './navigation.component'
 import {HeaderComponent} from './header.component'
+import {NotificationListComponent} from './notifications/notification-list.component'
+import {NotificationComponent} from './notifications/notification.component'
 
 import {LoginModule} from '../login/login.module'
 import {QueueModule} from '../queue/queue.module'
@@ -32,7 +34,13 @@ let routes: Route[] = [
     SubscriptionsModule,
     UtilModule
   ],
-  declarations: [ AppComponent, NavigationComponent, HeaderComponent, NavLinkComponent ],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    HeaderComponent,
+    NavLinkComponent,
+    NotificationListComponent,
+    NotificationComponent ],
   providers: [LoginRequiredGuard],
   bootstrap: [ AppComponent ]
 })

@@ -14,4 +14,8 @@ export class PodcastsService {
   get (): Observable<Podcast[]> {
     return this.http.get(podcastsSearchRoute).map(response => response.json())
   }
+
+  add (url: string): Observable<any> {
+    return this.http.post(podcastsSearchRoute, {url}).map(r => r.json(), r => r.json())
+  }
 }

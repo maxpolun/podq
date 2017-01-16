@@ -1,3 +1,4 @@
 node_modules/
 *.log
 web/build/
+.vscode/symbols.json

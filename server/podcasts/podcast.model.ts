@@ -66,9 +66,12 @@ export class Episode {
 
   static fromFeedItem (itemJson) {
     let enc = itemJson.enclosures[0]
+    if(!enc) {
+      return null
+    }
     return new Episode(
       itemJson.title,
-      itemJson.description,
+      itemJson.description || '',
       itemJson.pubDate,
       itemJson.guid,
       enc.url,
@@ -196,7 +199,7 @@ export function parse (inputStream: NodeJS.ReadableStream): Promise<Feed> {
     parser.on('end', () => {
       resolve({
         meta: Podcast.fromFeed(parser.meta),
-        items: items.map(Episode.fromFeedItem)
+        items: items.map(Episode.fromFeedItem).filter(ep => !!ep)
       })
     })
   })

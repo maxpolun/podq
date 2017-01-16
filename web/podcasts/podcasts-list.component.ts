@@ -7,7 +7,7 @@ import {Podcast} from './podcast.model'
 @Component({
   selector: 'podq-podcasts-list',
   template: `
-  <h3>Podcasts</h3>
+  <h3>Podcasts <a routerLink="/podcasts/add" class="btn">Add</a></h3>
   <ul class="card-deck">
     <li class="card" *ngFor="let podcast of (podcasts | async)">
       <div class="card-header">
