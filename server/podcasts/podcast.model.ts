@@ -66,7 +66,7 @@ export class Episode {
 
   static fromFeedItem (itemJson) {
     let enc = itemJson.enclosures[0]
-    if(!enc) {
+    if (!enc) {
       return null
     }
     return new Episode(
