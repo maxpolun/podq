@@ -10,10 +10,10 @@ export class PodcastsService {
   constructor (private http: AuthHttp, private loginService: LoginService) {}
 
   get (): Observable<Podcast[]> {
-    return this.http.get('/podcasts').map(response => response.json())
+    return this.http.get('/api/podcasts').map(response => response.json())
   }
 
   add (url: string): Observable<any> {
-    return this.http.post('/podcasts', {url}).map(r => r.json(), r => r.json())
+    return this.http.post('/api/podcasts', {url}).map(r => r.json(), r => r.json())
   }
 }
