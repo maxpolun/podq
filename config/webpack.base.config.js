@@ -32,7 +32,8 @@ module.exports = {
     }),
     new webpack.EnvironmentPlugin([
       'NODE_ENV',
-      'PODQ_ANGULAR_PROD_MODE'
+      'PODQ_ANGULAR_PROD_MODE',
+      'BASE_URL'
     ])
   ]
 }
