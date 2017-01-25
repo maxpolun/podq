@@ -11,10 +11,11 @@ export class Podcast {
 
   static fromFeed (feed) {
     let link = parseLinkTags(feed)
+    let self = link.self || feed['itunes:new-feed-url']['#']
     return new Podcast(
       feed.title,
       feed.description,
-      link.self,
+      self,
       link.hub
     )
   }
@@ -69,6 +70,10 @@ export class Episode {
     if (!enc) {
       return null
     }
+    if (!itemJson['itunes:duration']) {
+      console.log('missing duration on ', itemJson)
+    }
+    let duration = itemJson['itunes:duration'] ? itemJson['itunes:duration']['#'] : ''
     return new Episode(
       itemJson.title,
       itemJson.description || '',
@@ -77,7 +82,7 @@ export class Episode {
       enc.url,
       enc.type,
       enc.length,
-      itemJson['itunes:duration']['#']
+      duration
     )
   }
 }

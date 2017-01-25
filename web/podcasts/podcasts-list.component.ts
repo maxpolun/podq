@@ -3,6 +3,7 @@ import {Observable} from 'rxjs'
 
 import {PodcastsService} from './podcasts.service'
 import {Podcast} from './podcast.model'
+import {SubscriptionsService} from '../subscriptions/subscriptions.service'
 
 @Component({
   selector: 'podq-podcasts-list',
@@ -31,19 +32,18 @@ import {Podcast} from './podcast.model'
 })
 export class PodcastsListComponent {
   private podcasts: Observable<Podcast[]>
-  constructor (private podcastsService: PodcastsService) {}
+  constructor (private podcastsService: PodcastsService,
+               private subscriptionsService: SubscriptionsService) {}
 
   ngOnInit () {
     this.podcasts = this.podcastsService.get()
   }
 
   subscribe (podcast: Podcast) {
-    console.log('subscribed', podcast)
-    podcast.subscribed = true
+    this.subscriptionsService.subscribe(podcast).subscribe(() => podcast.subscribed = true)
   }
 
   unsubscribe (podcast: Podcast) {
-    console.log('unsubscribed', podcast)
-    podcast.subscribed = false
+    throw new Error('not implemented')
   }
 }

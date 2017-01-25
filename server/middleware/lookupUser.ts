@@ -7,7 +7,6 @@ import {UserRecord, NoUserError} from '../users/user.model'
 export let lookupUserMiddleware: Middleware = async (ctx: IRouterContext, next) => {
   if (ctx.params.userid) {
     try {
-      console.log(ctx.params.userid)
       ctx.state.user = await UserRecord.findByShortId(ctx.params.userid, db)
     } catch (e) {
       console.error('can\'t find user with shortid', ctx.params.userid, e)

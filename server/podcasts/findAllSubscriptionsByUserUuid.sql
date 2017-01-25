@@ -1,5 +1,6 @@
 -- find all subscriptions for a user
 
-SELECT uuid, feed_url, name, description
+SELECT podcasts.uuid, podcasts.feed_url, podcasts.name, podcasts.description
   FROM podcasts, subscriptions
-  WHERE subscriptions.podcast_uuid = ${uuid}
+  WHERE subscriptions.podcast_uuid = podcasts.uuid
+    AND subscriptions.user_uuid = ${uuid}

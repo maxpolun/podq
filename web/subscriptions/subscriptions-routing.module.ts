@@ -6,7 +6,7 @@ import {LoginRequiredGuard} from '../app/login-required.guard'
 
 let routes: Route[] = [
   {
-    path: 'podcasts',
+    path: 'subscriptions',
     component: SubscriptionsComponent,
     canActivate: [LoginRequiredGuard]
   }
